@@ -65,7 +65,7 @@ load_dotenv()
 MYSQL_USER = os.getenv("MYSQL_USER")
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
 MYSQL_HOST = os.getenv("MYSQL_HOST")
-MYSQL_PORT = int(os.getenv("MYSQL_PORT", "12960"))
+MYSQL_PORT = int(os.getenv("MYSQL_PORT"))
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
 engine = create_engine(
@@ -129,3 +129,6 @@ with Session(engine) as session:
 
     for item in j1.flores:
         print(item.Flores.nome, item.nome_cientifico, item.cor)
+
+#recuperando meu commit 
+#ass: Mari
