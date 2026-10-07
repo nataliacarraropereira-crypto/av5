@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, String, Text, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
 from typing import List
-
+import os
 
 class Base(DeclarativeBase):
     pass
@@ -58,9 +58,14 @@ class FloresNoJardim(Base):
     nome_cientifico: Mapped[str] = mapped_column(String(250))
     cor: Mapped[str] = mapped_column(String(250))
 
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
+MYSQL_HOST = os.getenv("MYSQL_HOST")
+MYSQL_PORT = int(os.getenv("MYSQL_PORT", 12960))
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
 engine = create_engine(
-    "mysql+pymysql://root:@localhost:3306/meubanco"
+f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
 )
 
 Base.metadata.create_all(engine)

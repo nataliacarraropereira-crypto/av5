@@ -40,15 +40,7 @@ Base.metadata.create_all(engine)
 # abrir a sessão
 with Session(engine) as session:
 
-    # criar uma pessoa
-    p = Pessoa(nome="João", 
-               email="joao@email.com",
-               telefone="11999999999")
-
-    # adicionar a pessoa na sessão, preparando para ser gravada
-    session.add(p)
-        
-    # confirmar a inserção no banco de dados
+  # confirmar a inserção no banco de dados
     session.commit()
 
     print("Tabela criada (se não havia) e pessoa inserida no banco de dados")
