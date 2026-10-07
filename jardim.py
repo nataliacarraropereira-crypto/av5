@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, String, Text, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
 from typing import List
 import os
+from dotenv import load_dotenv
 
 class Base(DeclarativeBase):
     pass
@@ -25,7 +26,8 @@ class Flores(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     nome: Mapped[str] = mapped_column(String(250))
-
+    tamanho: Mapped[str] = mapped_column(String(30))
+    pais_origem: Mapped[str] = mapped_column(String(30))
     jardim: Mapped[List["FloresNoJardim"]] = relationship(
         back_populates="Flores"
     )
@@ -58,10 +60,12 @@ class FloresNoJardim(Base):
     nome_cientifico: Mapped[str] = mapped_column(String(250))
     cor: Mapped[str] = mapped_column(String(250))
 
+load_dotenv()
+
 MYSQL_USER = os.getenv("MYSQL_USER")
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
 MYSQL_HOST = os.getenv("MYSQL_HOST")
-MYSQL_PORT = int(os.getenv("MYSQL_PORT", 12960))
+MYSQL_PORT = int(os.getenv("MYSQL_PORT", "12960"))
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
 engine = create_engine(
@@ -79,10 +83,10 @@ with Session(engine) as session:
         proprietario="Natalia"
     )
 
-    f1 = Flores(nome="lírio")
-    f2 = Flores(nome="tulipa")
-    f3 = Flores(nome="margarida")
-    f4 = Flores(nome="girassol")
+    f1 = Flores(nome="lírio", tamanho="médio", pais_origem="Japão")
+    f2 = Flores(nome="tulipa", tamanho="médio", pais_origem="Turquia")
+    f3 = Flores(nome="margarida", tamanho="pequeno", pais_origem="Reino Unido")
+    f4 = Flores(nome="girassol", tamanho="grande", pais_origem="Estados Unidos")
 
     fj1 = FloresNoJardim(
         Flores=f1,

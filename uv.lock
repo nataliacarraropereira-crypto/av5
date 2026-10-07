@@ -29,12 +29,14 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "pymysql" },
+    { name = "python-dotenv" },
     { name = "sqlalchemy" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pymysql", specifier = ">=1.2.3" },
+    { name = "python-dotenv", specifier = ">=1.2.3" },
     { name = "sqlalchemy", specifier = ">=2.1.1" },
 ]
 
