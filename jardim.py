@@ -16,9 +16,12 @@ class Jardim(Base):
     localizacao: Mapped[str] = mapped_column(Text)
     proprietario: Mapped[str] = mapped_column(Text)
 
+    #jardim: Mapped[List["FloresNoJardim"]] = relationship(
+    #back_populates="Flores"
+#)
     flores: Mapped[List["FloresNoJardim"]] = relationship(
-        back_populates="jardim"
-    )
+    back_populates="jardim"
+)
 
 
 class Flores(Base):
@@ -68,12 +71,25 @@ MYSQL_HOST = os.getenv("MYSQL_HOST")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT"))
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
-engine = create_engine(
-f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
-)
+print("Escolha um banco:")
+print("1 - MySQL")
+print("2 - SQLite")
+
+opcao = input("Digite sua opção: ")
+
+if opcao == "1":
+    engine = create_engine(
+        f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    )
+
+elif opcao == "2":
+    engine = create_engine("sqlite:///jardim.db")
+
+else:
+    print("Opção inválida!")
+    exit()
 
 Base.metadata.create_all(engine)
-
 
 with Session(engine) as session:
 
